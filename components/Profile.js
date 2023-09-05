@@ -1,4 +1,4 @@
-import { signOut, useSession } from "next-auth/react"
+import { useSession } from "next-auth/react"
 import useSpotify from "../hooks/useSpotify";
 import { useEffect, useState } from "react";
 
@@ -20,15 +20,9 @@ const Profile = () => {
   return (
     <>
 
-    <div className="bg-gradient-to-b from-orange-400 to-black min-h-[30vh] ">
-        
-        <div className='text-right'>
-            <button className='text-white font-light bg-[#191414] m-2 px-2 py-2 rounded-full text-s'  
-        onClick={() => signOut()}
-        >Log out</button>
-        </div>
+    <div className="bg-gradient-to-b from-orange-400 to-black min-h-[30vh]">
 
-        <div className="text-center flex flex-col">
+        <div className="text-center flex flex-col py-10">
             {
                 // Controlla se profile.images esiste e ha almeno due elementi
                 profile.images && profile.images.length > 1 ? 

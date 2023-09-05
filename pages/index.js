@@ -2,6 +2,7 @@ import { getSession,useSession } from 'next-auth/react'
 import Profile from '../components/Profile';
 import TopArtists from '../components/TopArtists';
 import TopTracks from '../components/TopTracks';
+import BottomNavbar from '../components/BottomNavbar';
 
 export default function Home() {
 
@@ -13,6 +14,8 @@ export default function Home() {
       <Profile />
       <TopArtists />
       <TopTracks />
+
+      <BottomNavbar />
         
     </main>
   )

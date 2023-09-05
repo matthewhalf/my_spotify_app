@@ -64,8 +64,13 @@ const ArtistDetail = () => {
         <div className='mx-3'>
             <h3 className='mb-5'>Le tue canzoni più ascoltate dell'artista</h3>
             {myArtistTopTracks.map((track, order) =>(
-                <div className="text-xs flex gap-3" key={track.id}>
+                <div className="text-xs flex gap-3 mb-5" key={track.id}>
                     <p>{order + 1}</p>
+                    <img 
+                        src={track.album.images[0].url} 
+                        alt={`Album cover for ${track.name}`} 
+                        className="w-10 rounded" 
+                    />
                     <p>{track.name}</p>
                 </div>
             ))}
