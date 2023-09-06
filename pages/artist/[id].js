@@ -1,6 +1,7 @@
 import { useRouter } from 'next/router';
 import useSpotify from '../../hooks/useSpotify';
 import { useEffect, useState } from 'react';
+import BottomNavbar from '../../components/BottomNavbar';
 
 const ArtistDetail = () => {
     const router = useRouter();
@@ -75,6 +76,8 @@ const ArtistDetail = () => {
                 </div>
             ))}
         </div>
+
+        <BottomNavbar />
         </>
     );
 }

@@ -10,11 +10,9 @@ const BottomNavbar = () => {
         <Link href="/">
             <p className="cursor-pointer">Home</p>
         </Link>
-        <div>
-            <button className=''  
-            onClick={() => signOut()}
-            >Logout</button>
-        </div>
+        <Link href="/profile">
+            <p className="cursor-pointer">Profilo</p>
+        </Link>
     </div>
   )
 }

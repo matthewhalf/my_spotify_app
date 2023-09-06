@@ -19,9 +19,6 @@ const TopTracks = () => {
         });
     }, [session, spotifyApi ])
 
-
-    console.log(topTracks)
-
   return (
     <>
     <h3 className="text-2xl mt-5 mx-3">Top Tracks</h3>
@@ -34,7 +31,7 @@ const TopTracks = () => {
             alt={`Album cover for ${topTrack.name}`} 
             className="w-full rounded" 
         />
-        <p className="text-center cursor-pointer text-gray-700 my-3 rounded-full">
+        <p className="text-center cursor-pointer text-white truncate my-3">
             {topTrack.name}
         </p>
     </div>

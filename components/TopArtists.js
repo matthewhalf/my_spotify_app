@@ -21,8 +21,6 @@ const TopArtists = () => {
         });
     }, [session, spotifyApi ])
 
-    console.log(topArtists)
-
   return (
     <>
     <h3 className="text-2xl mt-5 mx-3">Top Artists</h3>
@@ -34,7 +32,7 @@ const TopArtists = () => {
             <a>
               <p className="absolute bottom-[35%] ml-2 text-xl font-bold">{order + 1}</p>
               <img src={topArtist.images[0]?.url} alt="" className="w-full h-32 object-cover" />
-              <p className="text-center cursor-pointer text-gray-700 my-3 rounded-full">
+              <p className="text-center cursor-pointer text-white my-3">
               {topArtist.name}
               </p>
             </a>
