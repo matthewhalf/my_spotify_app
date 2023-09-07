@@ -21,9 +21,9 @@ const TopTracks = () => {
 
   return (
     <>
-    <h3 className="text-2xl mt-5 mx-3">Top Tracks</h3>
+    <h3 className="text-2xl mx-3">Top Tracks</h3>
 
-    <div className="flex flex-nowrap overflow-x-auto mx-3 mt-3">
+    <div className="flex flex-nowrap overflow-x-auto no-scrollbar mx-3 mt-3">
     {topTracks.map(topTrack => (
     <div className="flex-none w-1/3 pr-4" key={topTrack.id}>
         <img 

@@ -37,7 +37,7 @@ const Recommended = () => {
   return (
     <>
         <h2 className="text-3xl mx-3 pt-5 ">Buonasera</h2>
-        <h3 className="text-l mt-2 mx-3">Consigliati della settimana</h3>
+        <h3 className="text-l mt-2 mx-3">Consigliati per te della settimana</h3>
 
         <div className="grid grid-cols-2 mt-3">
         {recommended.tracks && recommended.tracks.slice(0, 6).map(recommend => (
