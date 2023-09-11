@@ -8,6 +8,7 @@ const Recommended = () => {
     const {data: session, status} = useSession();
     const spotifyApi = useSpotify();
     const [recommended, setRecommended] = useState({});
+    const [me, setMe] = useState([]);
 
 
     useEffect(() => {
@@ -31,23 +32,30 @@ const Recommended = () => {
             });
         }
     }, [session, spotifyApi]);
-    
 
+    useEffect(() =>{
+        spotifyApi.getMe()
+        .then(function(data) {
+            setMe(data.body);
+        }, function(err) {
+            console.log('Something went wrong!', err);
+        });
+    }, [session, spotifyApi])
 
   return (
     <>
-        <h2 className="text-3xl mx-3 pt-5 ">Buonasera</h2>
-        <h3 className="text-l mt-2 mx-3">Consigliati per te della settimana</h3>
+        <h2 className="text-3xl mx-3 pt-5 ">{ new Date().getHours() < 12 ? "Buongiorno" : "Buonasera" }, {me.id}</h2>
+        <h3 className="text-l mt-2 mx-3 text-gray-200">Consigliati per te della settimana</h3>
 
         <div className="grid grid-cols-2 mt-3">
-        {recommended.tracks && recommended.tracks.slice(0, 6).map(recommend => (
-        <div className="mx-3 my-1 flex bg-[#191414] gap-4 items-center" key={recommend.id}>
+        {recommended.tracks && recommended.tracks.slice(0, 4).map(recommend => (
+        <div className="mx-3 my-1 flex bg-[#191919] gap-4 items-center rounded-lg p-1" key={recommend.id}>
             <img 
                 src={recommend.album.images[0].url} 
                 alt={`Album cover for ${recommend.name}`} 
                 className="h-[50px] rounded" 
             />
-            <p className="text-center cursor-pointer text-white my-3 text-[14px] truncate">
+            <p className="text-center text-white my-3 text-[14px] truncate">
                 {recommend.name}
             </p> 
         </div>

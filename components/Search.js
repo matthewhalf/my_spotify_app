@@ -1,9 +1,10 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import useSpotify from "../hooks/useSpotify";
 import { useSession } from "next-auth/react";
+import CheckIcon from '@mui/icons-material/Check';
 
 const Search = () => {
-  const {data: session, status} = useSession();
+  const { data: session } = useSession();
   const spotifyApi = useSpotify();
   const [search, setSearch] = useState("");
   const [results, setResults] = useState([]);
@@ -12,10 +13,24 @@ const Search = () => {
   const handleSearch = async (query) => {
     try {
       const data = await spotifyApi.searchAlbums(query);
-      setResults(data.body.albums.items);  // Supponendo che i risultati siano in data.body.albums.items
+      const initialResults = data.body.albums.items;
+      setResults(initialResults);
+
+      // Verifica se gli album sono già stati salvati
+      if (session && session.user) {
+        const updatedResults = await Promise.all(
+          initialResults.map(async album => {
+            const res = await fetch(`/api/isAlbumSaved?username=${session.user.username}&albumId=${album.id}`);
+            const data = await res.json();
+            return { ...album, isSaved: data.isSaved };
+          })
+        );
+        setResults(updatedResults);
+      }
+      
       setError(null);
     } catch (err) {
-      setError(console.log(err));
+      setError(err);
       setResults([]);
     }
   };
@@ -71,7 +86,7 @@ const Search = () => {
   
 
   return (
-    <div className="flex flex-col justify-start bg-gradient-to-b from-orange-400 to-black h-[25vh] px-3">
+    <div className="flex flex-col justify-start bg-gradient-to-b from-green-500 to-black h-[25vh] px-3">
       <div>
         <h2 className="text-3xl mt-10 mb-3">Cerca</h2>
         <input
@@ -86,23 +101,31 @@ const Search = () => {
         ></input>
       </div>
       {results.length > 0 && (
-        <div className="mt-5">
-          <h3 className="text-center text-xl mb-3">Risultati</h3>
-          <ul>
-            {results.slice(0,9).map((album, index) => (
-              <li key={index} className="flex gap-3 items-center mb-5">
-                <img src={album.images[0].url} alt="" className="w-10 h-10" />
-                <p>{album.name} - {album.artists[0].name} - {album.duration_ms}</p>
-                <button onClick={() => handleSaveAlbum(album)}>Salva</button>              
-              </li>
-            ))}
-          </ul>
-        </div>
+      <div className="mt-5">
+        <h3 className="text-center text-xl mb-3">Risultati</h3>
+        <ul>
+          {results.slice(0,6).map((album, index) => (
+            <li key={index} className="flex gap-3 items-center mb-5 bg-[#191919] p-3 justify-between rounded-lg" style={{ background: album.isSaved ? '#157A3A' : '#191919' }}>
+              <div className="flex items-center gap-3 w-[75%]">
+                <img src={album.images[0].url} alt="" className="w-10 h-10 rounded-lg" />
+                <p className="text-base truncate">
+                  {album.name} 
+                  <br />
+                  <span className="text-sm text-gray-600" style={{ color: album.isSaved ? '#fff' : 'currentColor'}}>{album.artists[0].name}</span>
+                </p>
+              </div>
+              <button onClick={() => handleSaveAlbum(album)} className="border-[3px] border-solid" style={{ backgroundColor: album.isSaved ? '#379C63' : '#000'}}>
+                <CheckIcon />
+              </button>
+            </li>
+          ))}
+        </ul>
+      </div>
       )}
       {error && <p className="text-black">Nessun risultato, prova a ricercare</p>}
       <div className="mt-[40vh]">
         <h3 className="text-center text-xl">
-          Cerca i tuoi album preferiti e aggiungili al tuo profilo
+          Cerca gli album che hai ascoltato e aggiungili al tuo profilo
         </h3>
       </div>
     </div>

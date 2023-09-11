@@ -9,11 +9,13 @@ export default function Home() {
   const {data: session, status} = useSession();
 
   return (
-    <main>
+    <main className='bg-gradient-to-b from-green-500 to-black h-[20vh] pb-24'>
   
       <Recommended />
       <TopArtists />
       <TopTracks />
+
+      <div className="h-10"></div>
 
       <BottomNavbar />
         

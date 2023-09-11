@@ -1,19 +1,28 @@
-import Link from "next/link"
+import Link from "next/link";
+import { useRouter } from 'next/router';
+import HomeIcon from '@mui/icons-material/Home';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import SearchIcon from '@mui/icons-material/Search';
 
 const BottomNavbar = () => {
+  const router = useRouter();
+  const currentPath = router.pathname;
+
   return (
-    <div className="flex gap-3 bg-[#191414] fixed bottom-0 p-5 w-full m-auto justify-between text-center">
+    <>
+      <div className="flex gap-3 bg-[#191919] fixed bottom-0 p-4 mb-4 w-[90%] h-[60px] justify-between text-center left-[5%] rounded-3xl">
         <Link href="/search">
-            <p className="cursor-pointer">Ricerca</p>
+          <SearchIcon className={`cursor-pointer text-2xl ${currentPath === '/search' ? 'text-green-500' : ''}`} />
         </Link>
         <Link href="/">
-            <p className="cursor-pointer">Home</p>
+          <HomeIcon className={`cursor-pointer text-2xl ${currentPath === '/' ? 'text-green-500' : ''}`} />
         </Link>
         <Link href="/profile">
-            <p className="cursor-pointer">Profilo</p>
+          <AccountCircleIcon className={`cursor-pointer text-2xl ${currentPath === '/profile' ? 'text-green-500' : ''}`} />
         </Link>
-    </div>
+      </div>
+    </>
   )
 }
 
-export default BottomNavbar
+export default BottomNavbar;
