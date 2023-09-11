@@ -15,6 +15,6 @@ export async function middleware(req){
 
      // If user is not logged in and the path is not `/login`, rewrite the URL
      if (!token && pathname !== '/login') {
-        return NextResponse.redirect('http://localhost:3000/login');
+        return NextResponse.redirect('https://music-show-time.vercel.app/login');
     }  
 }
