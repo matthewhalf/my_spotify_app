@@ -8,8 +8,6 @@ const Recommended = () => {
     const {data: session, status} = useSession();
     const spotifyApi = useSpotify();
     const [recommended, setRecommended] = useState({});
-    const [me, setMe] = useState([]);
-
 
     useEffect(() => {
         const lastGenerated = localStorage.getItem('lastGenerated');
@@ -33,18 +31,9 @@ const Recommended = () => {
         }
     }, [session, spotifyApi]);
 
-    useEffect(() =>{
-        spotifyApi.getMe()
-        .then(function(data) {
-            setMe(data.body);
-        }, function(err) {
-            console.log('Something went wrong!', err);
-        });
-    }, [session, spotifyApi])
-
   return (
     <>
-        <h2 className="text-3xl mx-3 pt-5 ">{ new Date().getHours() < 12 ? "Buongiorno" : "Buonasera" }, {me.id}</h2>
+        <h2 className="text-3xl mx-3 pt-5 ">{ new Date().getHours() < 12 ? "Buongiorno" : "Buonasera" }</h2>
         <h3 className="text-l mt-2 mx-3 text-gray-200">Consigliati per te della settimana</h3>
 
         <div className="grid grid-cols-2 mt-3">
