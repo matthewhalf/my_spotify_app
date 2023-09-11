@@ -7,33 +7,45 @@ const Recommended = () => {
     
     const {data: session, status} = useSession();
     const spotifyApi = useSpotify();
-    const [followedArtists, setfollowedArtists] = useState({});
+    const [recommended, setRecommended] = useState({});
 
     useEffect(() => {
-        spotifyApi.getFollowedArtists()
-        .then(function(data) {
-            setfollowedArtists(data.body.artists);
-        }, function(err) {
-          console.log('Something went wrong!', err);
-        });
+        const lastGenerated = localStorage.getItem('lastGenerated');
+        const storedRecommendations = localStorage.getItem('recommendations');
+    
+        if (storedRecommendations && lastGenerated && Date.now() - new Date(lastGenerated).getTime() < 7 * 24 * 60 * 60 * 1000) {
+            setRecommended(JSON.parse(storedRecommendations));
+        } else {
+            spotifyApi.getRecommendations({
+                min_energy: 0.4,
+                seed_artists: ['1AgAVqo74e2q4FVvg0xpT7', '1MRiIeZbc0cRuxOafDUCtH'],
+                min_popularity: 50
+            })
+            .then(function(data) {
+                setRecommended(data.body);
+                localStorage.setItem('recommendations', JSON.stringify(data.body));
+                localStorage.setItem('lastGenerated', new Date().toISOString());
+            }, function(err) {
+                console.log("Something went wrong!", err);
+            });
+        }
     }, [session, spotifyApi]);
 
-    console.log(followedArtists)
   return (
     <>
         <h2 className="text-3xl mx-3 pt-5 ">{ new Date().getHours() < 12 ? "Buongiorno" : "Buonasera" }</h2>
         <h3 className="text-l mt-2 mx-3 text-gray-200">Consigliati per te della settimana</h3>
 
         <div className="grid grid-cols-2 mt-3">
-        {followedArtists.map(followedArtist => (
-        <div className="mx-3 my-1 flex bg-[#191919] gap-4 items-center rounded-lg p-1" key={followedArtist.id}>
+        {recommended.tracks && recommended.tracks.slice(0, 4).map(recommend => (
+        <div className="mx-3 my-1 flex bg-[#191919] gap-4 items-center rounded-lg p-1" key={recommend.id}>
             <img 
-                src={followedArtist.album.images[0].url} 
-                alt={`Album cover for ${followedArtist.name}`} 
+                src={recommend.album.images[0].url} 
+                alt={`Album cover for ${recommend.name}`} 
                 className="h-[50px] rounded" 
             />
             <p className="text-center text-white my-3 text-[14px] truncate">
-                {followedArtist.name}
+                {recommend.name}
             </p> 
         </div>
         ))}
