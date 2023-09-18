@@ -31,7 +31,7 @@ const TopAlbum = ({ username }) => {
         <div className="flex flex-nowrap overflow-x-auto no-scrollbar mx-3 mt-2 relative gap-3">
           {favoriteAlbums.map((album) => (
             <div key={album.spotifyId}>
-              <img src={album.images} alt="" className={`rounded-xl object-cover w-full h-36`} />
+              <img src={album.images} alt="" className={`rounded-xl object-cover h-36`} />
             </div>
           ))}
         </div>

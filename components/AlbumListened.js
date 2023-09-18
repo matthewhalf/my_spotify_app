@@ -21,7 +21,7 @@ const AlbumListened = ({ username }) => {
 
   return (
     <div>
-      <div className='flex justify-between mx-3 items-center'>
+      <div className='flex justify-between mx-3 mt-3 items-center'>
         <h3 className='text-2xl'>Album ascoltati</h3>
         <Link href="/albums">
             <p className="cursor-pointer text-xs text-gray-600">Guarda tutti</p>
