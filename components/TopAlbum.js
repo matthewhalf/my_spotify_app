@@ -28,9 +28,9 @@ const TopAlbum = ({ username }) => {
       {favoriteAlbums.length === 0 ? (
         <p className="mx-3 pb-5 pt-2 text-gray-600">Non ci sono album salvati nella tua top 3, aggiungi i tuoi preferiti dalla lista degli album ascoltati</p>
       ) : (
-        <div className="grid grid-cols-2 gap-3 mx-3 mt-2 mb-5">
-          {favoriteAlbums.map((album, index) => (
-            <div key={album.spotifyId} className={`${index === 0 ? 'col-span-2' : ''}`}>
+        <div className="flex flex-nowrap overflow-x-auto no-scrollbar mx-3 mt-2 relative gap-3">
+          {favoriteAlbums.map((album) => (
+            <div key={album.spotifyId}>
               <img src={album.images} alt="" className={`rounded-xl object-cover w-full h-36`} />
             </div>
           ))}
