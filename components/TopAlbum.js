@@ -31,7 +31,7 @@ const TopAlbum = ({ username }) => {
         <div className="grid grid-cols-2 gap-3 mx-3 mt-2 mb-5">
           {favoriteAlbums.map((album, index) => (
             <div key={album.spotifyId} className={`${index === 0 ? 'col-span-2' : ''}`}>
-              <img src={album.images} alt="" className={`rounded-xl object-cover w-full `} />
+              <img src={album.images} alt="" className={`rounded-xl object-cover w-full h-36`} />
             </div>
           ))}
         </div>
